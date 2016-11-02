@@ -86,7 +86,7 @@ public class MiPerfil extends JFrame {
 		cajaedad.setBounds(363, 36, 32, 20);
 		contentPane.add(cajaedad);
 		cajaedad.setColumns(10);
-		cajaedad.setText(String.valueOf(edad)); // Añadimos el int a la caja
+		cajaedad.setText(String.valueOf(edad)); // Añadimos el int a la caja con el comando String.valueOf(int).
 		
 		//Etiqueta de la ocupación
 		JLabel etiquetaocu = new JLabel("Ocupaci\u00F3n");
