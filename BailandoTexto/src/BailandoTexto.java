@@ -11,10 +11,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-/*
- * Actividad Evaluable Proyecto 01 BailandoTexto - Paco Maravilla Aliaga
- */
-
 public class BailandoTexto extends JFrame {
 
 	private JPanel contentPane;
@@ -93,3 +89,4 @@ public class BailandoTexto extends JFrame {
 		contentPane.add(etiqueta1);
 	}
 }
+
