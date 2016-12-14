@@ -1,0 +1,37 @@
+- Se han renombrado las distintas clases para hacer el proyecto más entendible y se han organizado los paquetes.
+
+
+- Se ha incluido un nuevo paquete donde está el siguiente .txt donde se informarán de los cambios durante el proyecto MathDice.
+
+
+- Ya no se muestra el alias creado para el jugador una vez introduce sus datos; ahora aparecerá un JDialog (ventana emergente donde el usuario puede introducir
+algun tipo de dato) donde el usuario podrá elegir mediante un JComboBox si quiere utilizar el alias creado o elegir uno él mismo.
+
+
+- Cuando introduzca el nuevo alias y presione enter o bien elija no modificarlo, se cerrarán la ventana del log-in y el JDialog para pasar a mostrar la ventana3
+, en la cual se mostrará información del nuevo jugador en este proyecto05 y posteriormente implementaremos el juego.
+
+
+- Se han añadido métodos (setters) en las distintas ventanas para importar y utilizar métodos de objetos creados en otras ventanas.
+
+			· Como se explicó en el vídeo de ayuda del proyecto05
+
+
+- Se han añadido parámetros de entrada en los constructores de v1 y v2, de manera que se puedan utilizar sus distintos métodos entre ellas:
+
+			· Por ejemplo;   VentanaLogin v1 = new VentanaLogin(v2).
+			
+			· En el proyecto ComunicandoVentanas tenemos un ejemplo.
+			
+
+- Cambio en el método crearApodo (clase Jugador):
+			
+			- Antes cambiaba todas las propiedades a minúscula para crear el array posteriormente y coger las 2 primeras letras.
+			<< this.nombre = nombre.toLowerCase(); >>
+			
+			- Ahora crea el array directamente sin cambiar las propiedades para poder utilizarlas posteriormente.
+			<< char[] array_nombre = nombre.toLowerCase().toCharArray(); >>
+			
+			
+- En la ventana EditarApodo (v2), se muestran JDialog en caso de que se introduzcan datos inválidos como alias.
+			
