@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
@@ -108,20 +109,15 @@ public class Ventana extends JFrame {
 		contentPane.add(cajaBuscarPalabra);
 		cajaBuscarPalabra.setColumns(10);
 		cajaBuscarPalabra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){												//SE CUELGA EL PROGRAMA AL PRESIONAR ENTER
-				//Acción al presionar enter
-				if(cajaPalabra5.isEditable() || !(botonAnyadir.isEnabled())){
-					buscarPalabra(nuevoArray, cajaBuscarPalabra.getText());
+			public void actionPerformed(ActionEvent e){												
+				if(cajaPalabra5.isEditable() || !(botonAnyadir.isEnabled())){					//Si ocurre algo de esto tocara el array de 5 palabras
+					//Antes de realizar la búsqueda binaria, tendremos que ordenar el array:
+					ordenarArray(nuevoArray);
+					buscar(nuevoArray, cajaBuscarPalabra.getText());
 				}
-				else{
-					buscarPalabra(miArray, cajaBuscarPalabra.getText());
-				}
-				//Mostramos si está o no
-				if(estaEnArray){
-					etiquetaResultado.setText("Sí está en la lista");
-				}
-				else{
-					etiquetaResultado.setText("No está en la lista");
+				else{																			//Si no, el de 4
+					ordenarArray();
+					buscar(miArray, cajaBuscarPalabra.getText());
 				}
 			}
 		});
@@ -129,19 +125,14 @@ public class Ventana extends JFrame {
 		botonOrdenar = new JButton("Ordenar");
 		botonOrdenar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cajaPalabra5.isEditable() || !(botonAnyadir.isEnabled())){			//Si ocurre algo de esto tocara ordenar el array de 5 palabras
+				if(cajaPalabra5.isEditable() || !(botonAnyadir.isEnabled())){					//Si ocurre algo de esto tocara ordenar el array de 5 palabras
 					ordenarArray(nuevoArray);
 				}
-				else{																	//Si no el de 4
+				else{																			//Si no el de 4
 					ordenarArray();
 				}
 			}
 		});
-		
-		//NO HACE FALTA CREAR MÉTODO pero devuelve el índice del valor
-		//Arrays.binarySearch(miArray, 0, miArray.length-1, "paco");
-		
-
 		
 		botonOrdenar.setBounds(148, 58, 124, 23);
 		contentPane.add(botonOrdenar);
@@ -204,27 +195,17 @@ public class Ventana extends JFrame {
 		nuevoArray=miArrayList.toArray(nuevoArray);
 	}
 	
-	//Método búsqueda binaria de un string en un array							//Algo falla
-	public void buscarPalabra(String array[], String palabra){
-		inicio=0;
-		fin=array.length-1;
-		while(inicio<=fin){
-			med=(inicio+fin)/2;													//Esto será el valor medio del array
-			if(array[med].compareTo(palabra)==0){
-				estaEnArray=true;
-			}
-			else if(array[med].compareTo(palabra)<0){							//Si devuelve valor negativo, es que está antes | Si lo devuelve positivo, es que está después
-				inicio=med+1;													//Si está antes, comenzaremos a buscar a partir del valor medio
-				estaEnArray=false;
-			}
-			else{
-				fin=med-1;														//Si está después comenzaremos a buscar desde el principio hasta antes del valor medio
-				estaEnArray=false;
-			}
+	//Método que realiza la búsqueda binaria
+	public void buscar(String array[], String palabra){
+		if(Arrays.binarySearch(array, palabra)>=0){								//Si devuelve un num >= 0 es que está, si es menor NO
+			JOptionPane.showMessageDialog(null,"La palabra se encuentra en la lista"); 
+		}
+		else{
+			JOptionPane.showMessageDialog(null,"La palabra NO se encuentra en la lista"); 
 		}
 	}
-
 	
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//Inner class
 	class ListenerCajas implements ActionListener{
@@ -233,14 +214,27 @@ public class Ventana extends JFrame {
 			// Acción a realizar al hacer click
 			JTextField caja=(JTextField)e.getSource();						//Comprobamos sobre que caja se ha realizado la accion
 			int indice=Integer.valueOf(caja.getName());						//Asignamos a un entero el valor del nombre de la caja
-			caja.setEditable(false);
+			
 			if(caja.getName().equals("5")){
-				anyadirPalabra(miArray, caja.getText());
-				nuevoArray[indice-1]=caja.getText();	
+				if(caja.getText().matches("[A-Z].*")){						//Devolverá true si el string empieza por mayúscula
+					anyadirPalabra(miArray, caja.getText());
+					nuevoArray[indice-1]=caja.getText();
+					caja.setEditable(false);
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(null,"Tienes que introducir una palabra que empiece por mayúscula"); 
+				}
 			}
 			else{
-				miArray[indice-1]=caja.getText();							//Asignamos el texto al valor del indice correspondiente (-1 porque el array empieza de [0]
+				if(caja.getText().matches("[A-Z].*")){						//Devolverá true si el string empieza por mayúscula
+					miArray[indice-1]=caja.getText();						//Asignamos el texto al valor del indice correspondiente (-1 porque el array empieza de [0]
+					caja.setEditable(false);
+				}
+				else{
+					JOptionPane.showMessageDialog(null,"Tienes que introducir una palabra que empiece por mayúscula"); 	
+					}
+				}
 			}
 		}
-	}
 }
