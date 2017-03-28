@@ -28,3 +28,6 @@ en la ventana de editar el perfil, y en un futuro en una tabla de puntuaciones m
 
 
 - Nuevo color de fondo
+
+- Solucionado problema con los Listeners, que al presionar el boton de comprobar se añadían todos de nuevo y si no se habían utilizado algunos, estos acumulaban los listeners,
+de manera que al borrarlo seguía teniendolo activo. (Juego_Dificil)

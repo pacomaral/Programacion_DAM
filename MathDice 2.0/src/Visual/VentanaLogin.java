@@ -112,7 +112,7 @@ public class VentanaLogin extends JFrame {
 		etiquetaImagen.setBounds(370, 184, 25, 25);
 		contentPane.add(etiquetaImagen);
 		//Ponemos imagen
-		ImageIcon img1 = new ImageIcon(getClass().getResource("/imagenes/signo-interrogacion.png"));		//Creamos un objeto imageicon con la ruta de la imagen que queremos
+		ImageIcon img1 = new ImageIcon(getClass().getResource("/Imagenes/signo-interrogacion.png"));		//Creamos un objeto imageicon con la ruta de la imagen que queremos
 		etiquetaImagen.setIcon(img1);
 		//Añadimos el listener
 	    etiquetaImagen.addMouseListener(new ListenerInterrogacion());

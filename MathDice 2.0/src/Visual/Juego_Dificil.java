@@ -81,6 +81,9 @@ public class Juego_Dificil extends JPanel {
 	private boolean tocaRestar = false;									
 	private boolean tocaMultiplicar=false;
 	private boolean tocaDividir=false;
+	
+	//Array para controlar los listeners
+	private JLabel[] arrayDados = new JLabel[5];
 
 	
 	/**
@@ -337,19 +340,19 @@ public class Juego_Dificil extends JPanel {
 			
 		//Rellenamos el array dados3 con las 3 imágenes del dado con valores 1, 2 y 3; para utilizarlo posteriormente
 		for(int i=0; i<dados3.length; i++){
-			dados3[i] = new ImageIcon(getClass().getResource("/imagenes/dado"+String.valueOf(i+1)+"_3.png"));
+			dados3[i] = new ImageIcon(getClass().getResource("/Imagenes/dado"+String.valueOf(i+1)+"_3.png"));
 		}
 			
 			
 		//Rellenamos el array dados6 con las imágenes del dado con 6 caras
 		for(int i=0; i<dados6.length; i++){
-			dados6[i] = new ImageIcon(getClass().getResource("/imagenes/dado"+String.valueOf(i+1)+"_6.png"));
+			dados6[i] = new ImageIcon(getClass().getResource("/Imagenes/dado"+String.valueOf(i+1)+"_6.png"));
 		}
 			
 			
 		//Rellenamos el array dados12 con las imágenes del dado con 12 caras
 		for(int i=0; i<dado12.length; i++){
-			dado12[i] = new ImageIcon(getClass().getResource("/imagenes/dado"+String.valueOf(i+1)+"_12.png"));
+			dado12[i] = new ImageIcon(getClass().getResource("/Imagenes/dado"+String.valueOf(i+1)+"_12.png"));
 		}
 
 		//Rellenamos el array numAleatorio
@@ -447,6 +450,13 @@ public class Juego_Dificil extends JPanel {
 		botonEmpezar.setEnabled(true);
 	}
 	
+	public void anyadirListenerSiNoTiene(JLabel dado){
+		if(!dado.isEnabled()){
+			dado.addMouseListener(new ListenerDados());
+			dado.setEnabled(true);
+		}
+	}
+	
 	
 	
 	/**
@@ -469,6 +479,7 @@ public class Juego_Dificil extends JPanel {
 				tocaOperacion=true;
 				cajaOperaciones.setText(cajaOperaciones.getText() + String.valueOf(valorDado));
 				dado.removeMouseListener(this);
+				dado.setEnabled(false); 											//Lo desactivamos para la comprobación luego de si tiene el listener
 			}		
 		}
 		
@@ -549,11 +560,14 @@ public class Juego_Dificil extends JPanel {
 			tirarDados();												//Cada vez que comprobamos, volveremos a tirar los dados
 			
 			//Añadimos los MouseListeners, ya que al presionar en un Dado lo habremos eliminado y si no los añadimos no los podremos utilizar de nuevo
-			dado1.addMouseListener(new ListenerDados());
-			dado2.addMouseListener(new ListenerDados());
-			dado3.addMouseListener(new ListenerDados());
-			dado4.addMouseListener(new ListenerDados());
-			dado5.addMouseListener(new ListenerDados());
+			anyadirListenerSiNoTiene(dado1);
+			anyadirListenerSiNoTiene(dado2);
+			anyadirListenerSiNoTiene(dado3);
+			anyadirListenerSiNoTiene(dado4);
+			anyadirListenerSiNoTiene(dado5);
+			
+			
+			
 		}
 	}
 	
