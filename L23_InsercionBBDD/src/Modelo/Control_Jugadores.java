@@ -33,5 +33,12 @@ public class Control_Jugadores {
 			System.out.println("El usuario " + usuario + " ya se encuentra registrado.");
 			e.printStackTrace();
 		}
+		finally{
+			try{
+				orden.close();						//Cerramos el statement
+			}
+			catch(SQLException e){
+			}
+		}
 	}
 }
