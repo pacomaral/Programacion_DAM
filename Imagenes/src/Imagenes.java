@@ -53,7 +53,7 @@ public class Imagenes extends JFrame {
 			System.out.println("La ruta de la imagen es incorrecta o no existe.");  		//Mensaje que mostraría si hubiera error en el try anterior
 		}																					//El JFrame se lanzaría igual pero sin la imagen
 			
-		etiqueta_imagen.setBounds(106, 24, 256, 256);		//Ponemos en los dos últimos campos las medidas de la imágen (p.e 256*256px la que vamos a usar)
+		etiqueta_imagen.setBounds(202, 95, 27, 27);		//Ponemos en los dos últimos campos las medidas de la imágen (p.e 256*256px la que vamos a usar)
 		contentPane.add(etiqueta_imagen);
 		
 		
