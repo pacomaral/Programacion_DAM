@@ -16,10 +16,10 @@ public class Control_Jugadores {
 	}
 	
 	//Método para insertar un nuevo jugador en la base de datos (sin comprobar si estaba previamente)
-	public void insertarJugador(String nombre, String apellido1, String apellido2, int edad, String usuario){
+	public void insertarJugador(String nombre, String apellido1, String apellido2, int edad, String usuario, String clave){
 		try{
 			orden = conexion.createStatement();
-			sql = "INSERT INTO jugadores (nombre, apellido1, apellido2, edad, usuario) VALUES ('"+nombre+"', '"+apellido1+"', '"+apellido2+"', "+edad+", '"+usuario+"')";
+			sql = "INSERT INTO jugadores (nombre, apellido1, apellido2, edad, usuario, clave) VALUES ('"+nombre+"', '"+apellido1+"', '"+apellido2+"', "+edad+", '"+usuario+"', '"+clave+"')";
 			orden.executeUpdate(sql);
 			System.out.println("Usuario " + usuario + " registrado con éxito");
 		}

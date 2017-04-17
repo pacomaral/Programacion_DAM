@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Ventana_Registro extends JFrame {
 
@@ -37,6 +38,8 @@ public class Ventana_Registro extends JFrame {
 	private Control_Jugadores controlDB;
 	private Connection conexion;							//Conexión
 	private boolean connected=false;						//Semáforo para saber si estamos conectados
+	private JPasswordField cajaClave;
+	private JLabel etiquetaClave;
 
 
 	/**
@@ -101,22 +104,33 @@ public class Ventana_Registro extends JFrame {
 		botonRegistrar = new JButton("Registrar");
 		botonRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Nos conectamos
-				connected = conexionDB.conectarBD();
-				//Asignamos la conexión y la pasamos al nuevo objeto de control de la base de datos
-				conexion = conexionDB.getConexion();
-				controlDB = new Control_Jugadores(conexion);
+				conectarBD();
 				//Insertamos el jugador cogiendo los datos de las cajas
-				controlDB.insertarJugador(cajaNombre.getText(), cajaApellido1.getText(), cajaApellido2.getText(), Integer.valueOf(cajaEdad.getText()), cajaUsuario.getText());
+				controlDB.insertarJugador(cajaNombre.getText(), cajaApellido1.getText(), cajaApellido2.getText(), Integer.valueOf(cajaEdad.getText()), cajaUsuario.getText(), String.valueOf(cajaClave.getPassword()));
 				//Cerramos la conexion
 				conexionDB.finalizarConexion();
 			}
 		});
-		botonRegistrar.setBounds(168, 251, 146, 23);
+		botonRegistrar.setBounds(163, 265, 146, 23);
 		contentPane.add(botonRegistrar);
 		
-		//Objeto para la conexion
-		conexionDB = new ConexionBD("localhost", "jugadores", "root", "asdasd");
+		cajaClave = new JPasswordField();
+		cajaClave.setBounds(131, 230, 293, 20);
+		contentPane.add(cajaClave);
 		
+		etiquetaClave = new JLabel("Contrase\u00F1a");
+		etiquetaClave.setBounds(20, 233, 87, 14);
+		contentPane.add(etiquetaClave);
+		
+		//Objeto para la conexion
+		conexionDB = new ConexionBD("84.126.92.105:3306", "usuarios", "root", "asdasd");
+	}
+	
+	public void conectarBD(){
+		//Nos conectamos 
+		connected = conexionDB.conectarBD();
+		conexion = conexionDB.getConexion();
+		//Pasamos la conexión al objeto de control de la BBDD
+		controlDB = new Control_Jugadores(conexion);
 	}
 }
