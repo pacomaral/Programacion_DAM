@@ -244,6 +244,8 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	public void lanzarAcceso(){
+		CardLayout c1 = (CardLayout)(contentPane.getLayout());
+		c1.show(contentPane, MODO_JUEGO);
 		vAcceso.setVisible(true);
 		vAcceso.limpiarCajas();
 		dispose(); 																	//Cerramos la ventana actual
