@@ -248,6 +248,7 @@ public class VentanaPrincipal extends JFrame {
 		c1.show(contentPane, MODO_JUEGO);
 		vAcceso.setVisible(true);
 		vAcceso.limpiarCajas();
+		vAcceso.limpiarDatosRegistro();
 		dispose(); 																	//Cerramos la ventana actual
 	}
 	

@@ -366,6 +366,15 @@ public class Acceso extends JFrame {
 		cajaPassword.setText("");
 	}
 	
+	public void limpiarDatosRegistro(){
+		cajaNombre.setText("");
+		cajaApellido1.setText("");
+		cajaApellido2.setText("");
+		cajaEdad.setText("");
+		cajaUser.setText("");
+		cajaPass.setText("");
+	}
+	
 	/**
 	 * INNER CLASSES
 	 */
