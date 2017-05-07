@@ -2,7 +2,7 @@ package Principal;
 import Vista.Acceso;
 import Vista.VentanaPrincipal;
 
-public class Principal {
+public class Principal {															//PRINCIPAL
 
 	public static void main(String[] args) {
 		
