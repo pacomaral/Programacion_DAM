@@ -1,0 +1,33 @@
+
+- Las comprobaciones (tanto en la Ventana de Login como en la de EditarApodo) se hacen con el método matches, de esta manera se eliminan los métodos creados 
+específicamente para las comprobaciones en la ventana de login.
+
+
+- Incluidos todos los Listeners como Inner Classes, de manera que queda mejor estructurado y limpio el código.
+
+
+- Nueva estructuración de ventanas. Ahora sólo tenemos 2 JFrames: Login, y Ventana_Principal. Esta Ventana Principal tiene un CardLayout con las diferentes ventanas a utilizar
+añadidas como JPanels, de manera que podamos cambiar entre estos Paneles sin cambiar de frame.
+
+		*El panel para el modo de juego difícil (Juego_Dificil), es un gridbaglayout en el cuál hemos ido añadiendo Paneles ya preparados (por ejemplo los dados/las operaciones,
+		que son gridlayout), y otros componentes, de manera que se quede todo organizado como queremos. 
+		(se ha seguido este tutorial, además de los recursos del curso:  http://www.chuidiang.com/java/layout/GridBagLayout/GridBagLayout.php)
+		
+		*El panel para editar el perfil, también es un gridbaglayout, organizado de la misma manera que el del modo de juego difícil
+		
+		*Añadido JPanel (Ayuda), que se añadirá al CardLayout y en el cuál explicamos el funcionamiento de los diferentes modos de juego. Este panel tendrá un JScrollBar
+		con un JTextArea 
+
+
+
+- Añadido un menu en Ventana Principal para poder acceder a todos los paneles que forman el CardLayout de Ventana_Principal
+
+
+- Nueva propiedad para el jugador (puntuacionMax), donde se almacenará la puntuación máxima que haya obtenido en el modo de juego difícil, y la cuál se mostrará 
+en la ventana de editar el perfil, y en un futuro en una tabla de puntuaciones máximas de los diferentes usuarios.
+
+
+- Nuevo color de fondo
+
+- Solucionado problema con los Listeners, que al presionar el boton de comprobar se añadían todos de nuevo y si no se habían utilizado algunos, estos acumulaban los listeners,
+de manera que al borrarlo seguía teniendolo activo. (Juego_Dificil)

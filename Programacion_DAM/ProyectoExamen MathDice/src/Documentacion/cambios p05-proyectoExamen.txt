@@ -1,0 +1,17 @@
+- Se incluyen todas las imágenes necesarias para el funcionamiento del juego (dados y suma/resta..), así como las etiquetas y JTextFields necesarios.
+
+- Se crean las 'inner class' necesarias para el funcionamiento del juego y se añaden los mouselisteners a los JLabels de las imágenes
+
+- Se crea un método tirarDados(), para mostrar los dados aleatoriamente cada vez que se necesite (al entrar en la ventana de juego, al reiniciar el juego...)
+
+- Se incluyen las comprobaciones necesarias para que no se puedan elegir dos dados o dos operaciones de manera consecutiva, de manera que haya que elegir un dado, 
+luego suma/resta, luego otro dado..
+
+- Dos nuevos botones para poder jugar correctamente (comprobación y volver a intentar)
+
+- Se añade un método operacion() que se encarga de hacer las operaciones correspondientes y modificar la variable necesaria con el resultado
+
+- Se añade un método SePuedeJugar(), que comprueba que la suma de los 5 dados sea al menos igual que la del dado de 12 caras, de manera que si no es así vuelva a llamar
+al método tirarDados()
+
+-

@@ -1,0 +1,34 @@
+- v1 = ventana para Login | v2 = ventana para editar el Apodo | v3 = ventana de juego fácil | v4 = ventana de juego difícil
+
+- Se limpia un poco el código de comentarios innecesarios y de código que no se llega a utilizar
+
+- Hay un nuevo modo de juego difícil; para elegir si quieres jugar al fácil o al difícil, en la ventana de editar el apodo (v2) tendremos que seleccionarlo 
+(se han utilizado JRadioButtons añadidos a un ButtonGroup para que solo pueda elegirse uno) -> http://www.discoduroderoer.es/tipos-de-componentes-graficos-en-java/
+
+- Nueva ventana para el modo de juego difícil (v4)
+
+- Se adapta el método sePuedeJugar() para el nuevo modo de juego difícil, aunque sigue siendo posible por la infinidad de posibilidades que no se pueda llegar al número objetivo.
+Por esto, se podrá presionar comprobar para pasar a la siguiente jugada.
+
+- Añadido un control de excepciones en el método crearApodo() de la clase jugador, y en caso de que ocurra un error al crear el apodo, se asignará el nombre 
+introducido como apodo.
+
+- Añadidas las Inner class fuera del constructor para que en este solo se incluyan los elementos gráficos y el código necesario.
+
+- Se ha añadido un temporizador mediante la clase Timer (en el modo difícil), para que al darle empezar tengamos 1 minuto para jugar, y al acabar, nos mostrará la puntuación mediante
+un JOptionPane.
+
+
+- NUEVA ORGANIZACIÓN DE LA VENTANA DE JUEGO DIFÍCIL:
+
+		* Ahora no habrá un único panel que será donde están todos los componentes del juego
+		
+		* Habrá dos JPanels: panelJuego, y panelAyuda. Ambos estarán dentro de un objeto JTabbedPane llamado pestañas, de esta manera en el Panel principal apareceran dos 
+		pestañas donde podremos ir cambiando del panel donde se jugará, a un nuevo panel dónde se explicará el funcionamento del juego.
+		
+		
+		La información sobre el JTabbedPane está sacada de la siguiente página: http://www.discoduroderoer.es/como-crear-pestanas-con-la-clase-jtabbedpane-en-java/
+
+
+
+

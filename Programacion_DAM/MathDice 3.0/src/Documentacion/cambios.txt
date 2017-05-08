@@ -1,0 +1,20 @@
+- Eliminada ventana de Login e implementado un sistema de acceso con usuario/contraseña (verificado en una BBDD). El usuario tendrá la opción de registrarse en caso de que no lo esté, para
+poder acceder posteriormente.
+
+- Modificado el sistema de operaciones del modo de juego difícil para que el usuario no se confunda.
+
+			+ Ahora irá mostrándose el resultado de las operaciones realizadas en la caja de texto correspondiente, en lugar de mostrar, por ejemplo, 2+3x5, cosa que confundía al usuario
+			ya que se hacía primero la suma y después la multiplicación (de izquierda a derecha).
+			
+- Nuevo apartado en el menú del juego:
+
+			+ 'Desconectarse', donde el usuario podrá salir de su cuenta y volver a la ventana de acceso para acceder con otro usuario.
+			+ 'Clasificación', donde el usuario podrá consultar una clasificación de puntuaciones sobre todos los usuarios registrados en la BBDD.
+			
+- Ahora, al acabarse el tiempo, si el jugador ha hecho una puntuación superior a la máxima que tenía, se actualizará esta máxima en la BBDD.
+
+- El usuario podrá modificar los datos que quiera de su perfil en la ventana 'Editar perfil' (en el menú del juego), actualizándose estos en la BBDD para posteriores accesos.
+
+- Nueva organización del proyecto en diferentes paquetes utilizando un modelo similar al MVC (Modelo Vista Controlador).
+
+- Actualizada la ventana de ayuda.
