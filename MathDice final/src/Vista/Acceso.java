@@ -30,11 +30,14 @@ import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Acceso extends JFrame {
 
@@ -58,15 +61,19 @@ public class Acceso extends JFrame {
 	private final static String REGISTRO="Ventana para registrar un nuevo jugador";
 	
 	//Componentes para el panel de Login
-	private JLabel etiquetaUsuario, etiquetaPassword;
-	private JTextField cajaUsuario;
+	private JLabel etiquetaUsuario, etiquetaPassword, imagenDado;
+	private JTextField cajaComboBox;
 	private JPasswordField cajaPassword;
 	private JButton botonAcceder, botonRegistro;
 	private JComboBox comboBox;
-	private JTextField cajaComboBox;
 	private JButton botonBuscar;
 	private int itemsComboBox;
-	private JLabel etiquetaSeleccionUsuario;
+	private ImageIcon dadoLogin = new ImageIcon(getClass().getResource("/Imagenes/dado.png"));								//Imagen del panel de acceso
+	private JPanel panelBotones;
+	
+	//Semáforo
+	private boolean clickHecho=false;
+	
 	
 	//Componentes para el panel de registro
 	private JLabel etiquetaNombre, etiquetaApellido1, etiquetaApellido2, etiquetaEdad, etiquetaUser, etiquetaPass;
@@ -81,6 +88,7 @@ public class Acceso extends JFrame {
 	 * Constructor
 	 */
 	public Acceso(VentanaPrincipal vp) {
+		setResizable(false);
 		
 
 		
@@ -91,7 +99,7 @@ public class Acceso extends JFrame {
 		//Configuración del JFrame
 		//---------------------------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 478, 403);
+		setBounds(100, 100, 393, 445);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -120,55 +128,27 @@ public class Acceso extends JFrame {
 		
 		
 		//Configuramos los componentes
-		etiquetaSeleccionUsuario = new JLabel();
-		etiquetaSeleccionUsuario.setFont(new Font("Ubuntu", Font.BOLD, 14));
-		etiquetaSeleccionUsuario.setText("Selecciona tu usuario");													//Le ponemos un nombre por si lo necesitamos posteriormente
-		GridBagConstraints gbc_etiquetaSeleccionUsuario=new GridBagConstraints();
-		gbc_etiquetaSeleccionUsuario.weightx = 0.5;
-		gbc_etiquetaSeleccionUsuario.insets = new Insets(30, 0, 0, 0);
-		gbc_etiquetaSeleccionUsuario.gridx=0;															//Comenzará desde la columna 0 y fila 0
-		gbc_etiquetaSeleccionUsuario.gridy=0;
-		gbc_etiquetaSeleccionUsuario.gridwidth=3;  														//Ocupará 1 fila y 1 columna
-		gbc_etiquetaSeleccionUsuario.gridheight=1;
-		panelLogin.add(etiquetaSeleccionUsuario, gbc_etiquetaSeleccionUsuario);
-
-		etiquetaUsuario = new JLabel();
-		etiquetaUsuario.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-		etiquetaUsuario.setText("Usuario");
-		etiquetaUsuario.setName("Usuario"); 													//Le ponemos un nombre por si lo necesitamos posteriormente
-		GridBagConstraints gbc_etiquetaUsuario=new GridBagConstraints();
-		gbc_etiquetaUsuario.weightx = 0.5;
-		gbc_etiquetaUsuario.insets = new Insets(0, 20, 0, 0);
-		gbc_etiquetaUsuario.gridx=0;															//Comenzará desde la columna 0 y fila 0
-		gbc_etiquetaUsuario.gridy=2;
-		gbc_etiquetaUsuario.gridwidth=1;  														//Ocupará 1 fila y 1 columna
-		gbc_etiquetaUsuario.gridheight=1;
-		panelLogin.add(etiquetaUsuario, gbc_etiquetaUsuario);
+		imagenDado = new JLabel();
+		imagenDado.setIcon(dadoLogin); 																//Añadimos la imagen al jlabel
+		GridBagConstraints gbc_imagenDado = new GridBagConstraints();
+		gbc_imagenDado.weighty = 0.2;
+		gbc_imagenDado.gridx=0;
+		gbc_imagenDado.gridy=0;
+		gbc_imagenDado.gridwidth=3;
+		gbc_imagenDado.gridheight=1;
+		panelLogin.add(imagenDado, gbc_imagenDado);
 		
 		etiquetaPassword = new JLabel();
 		etiquetaPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 		etiquetaPassword.setText("Contraseña");
-		etiquetaUsuario.setName("Contraseña"); 													
 		GridBagConstraints gbc_etiquetaPassword=new GridBagConstraints();
+		gbc_etiquetaPassword.weighty = 0.2;
 		gbc_etiquetaPassword.insets = new Insets(0, 20, 0, 0);
 		gbc_etiquetaPassword.gridx=0;															
-		gbc_etiquetaPassword.gridy=3;
+		gbc_etiquetaPassword.gridy=2;
 		gbc_etiquetaPassword.gridwidth=1;  														
 		gbc_etiquetaPassword.gridheight=1;
 		panelLogin.add(etiquetaPassword, gbc_etiquetaPassword);
-		
-		cajaUsuario = new JTextField();
-		cajaUsuario.setEditable(false);
-		cajaUsuario.setName("cajaUsuario"); 													
-		GridBagConstraints gbc_cajaUsuario=new GridBagConstraints();
-		gbc_cajaUsuario.weighty = 0.2;
-		gbc_cajaUsuario.insets = new Insets(0, 0, 0, 50);
-		gbc_cajaUsuario.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cajaUsuario.gridx=1;															
-		gbc_cajaUsuario.gridy=2;
-		gbc_cajaUsuario.gridwidth=2;  														
-		gbc_cajaUsuario.gridheight=1;
-		panelLogin.add(cajaUsuario, gbc_cajaUsuario);
 		
 		cajaPassword = new JPasswordField();
 		cajaPassword.setName("cajaUsuario"); 													
@@ -177,41 +157,54 @@ public class Acceso extends JFrame {
 		gbc_cajaPassword.insets = new Insets(0, 0, 0, 50);
 		gbc_cajaPassword.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cajaPassword.gridx=1;															
-		gbc_cajaPassword.gridy=3;
+		gbc_cajaPassword.gridy=2;
 		gbc_cajaPassword.gridwidth=2;  														
 		gbc_cajaPassword.gridheight=1;
 		panelLogin.add(cajaPassword, gbc_cajaPassword);
 		
-		cajaComboBox = new JPasswordField();
-		cajaComboBox.setName("cajaUsuario"); 													
+		cajaComboBox = new JTextField();
+		cajaComboBox.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		cajaComboBox.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {															//HACER INNER CLASS I NO DEJARLO AQUI
+				if(!clickHecho){
+					cajaComboBox.setText("");
+					clickHecho=true;
+				}
+			}
+		});
+		cajaComboBox.setName("cajaUsuario"); 		
+		cajaComboBox.setText("Buscar usuario...");
 		GridBagConstraints gbc_cajaComboBox=new GridBagConstraints();
+		gbc_cajaComboBox.weightx = 0.7;
 		gbc_cajaComboBox.weighty = 0.2;
-		gbc_cajaComboBox.insets = new Insets(20, 10, 0, 10);
+		gbc_cajaComboBox.insets = new Insets(0, 27, 0, 0);
 		gbc_cajaComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cajaComboBox.gridx=1;															
 		gbc_cajaComboBox.gridy=1;
-		gbc_cajaComboBox.gridwidth=1;  														
 		gbc_cajaComboBox.gridheight=1;
 		panelLogin.add(cajaComboBox, gbc_cajaComboBox);
 		
 		botonAcceder = new JButton();
 		botonAcceder.setText("Acceder"); 													
 		GridBagConstraints gbc_botonAcceder=new GridBagConstraints();
-		gbc_botonAcceder.insets = new Insets(0, 30, 20, 0);
+		gbc_botonAcceder.weighty = 0.2;
+		gbc_botonAcceder.fill = GridBagConstraints.HORIZONTAL;
+		gbc_botonAcceder.insets = new Insets(0, 40, 15, 0);
 		gbc_botonAcceder.gridx=0;															
-		gbc_botonAcceder.gridy=4;
+		gbc_botonAcceder.gridy=3;
 		gbc_botonAcceder.gridwidth=1;  														
 		gbc_botonAcceder.gridheight=1;
-		panelLogin.add(botonAcceder, gbc_botonAcceder);
+		panelLogin.add(botonAcceder, gbc_botonAcceder);  
 		botonAcceder.addActionListener(new listenerBotonAcceder());
 		
 		botonRegistro = new JButton();
 		botonRegistro.setText("Nuevo usuario"); 													
 		GridBagConstraints gbc_botonRegistro=new GridBagConstraints();
 		gbc_botonRegistro.weighty = 0.1;
-		gbc_botonRegistro.insets = new Insets(0, 0, 20, 50);
-		gbc_botonRegistro.gridx=1;															
-		gbc_botonRegistro.gridy=4;
+		gbc_botonRegistro.insets = new Insets(0, 0, 15, 25);
+		gbc_botonRegistro.gridx=2;															
+		gbc_botonRegistro.gridy=3;
 		gbc_botonRegistro.gridwidth=1;  														
 		gbc_botonRegistro.gridheight=1;
 		panelLogin.add(botonRegistro, gbc_botonRegistro);
@@ -220,7 +213,7 @@ public class Acceso extends JFrame {
 		botonBuscar = new JButton();
 		botonBuscar.setText("Buscar");
 		GridBagConstraints gbc_botonBuscar = new GridBagConstraints();
-		gbc_botonBuscar.insets = new Insets(20, 0, 0, 50);
+		gbc_botonBuscar.weightx = 0.1;
 		gbc_botonBuscar.gridx=2;
 		gbc_botonBuscar.gridy=1;
 		gbc_botonBuscar.gridwidth=1;
@@ -229,13 +222,16 @@ public class Acceso extends JFrame {
 		
 		comboBox = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(20, 20, 0, 0);
+		gbc_comboBox.weightx = 0.1;
+		gbc_comboBox.weighty = 0.2;
+		gbc_comboBox.insets = new Insets(0, 20, 0, 0);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx=0;
 		gbc_comboBox.gridy=1;
 		gbc_comboBox.gridwidth=1;
 		gbc_comboBox.gridheight=1;
 		panelLogin.add(comboBox, gbc_comboBox);
+		
 		
 		//---------------------------------------------------------------------------------
 		//Configuración del panel de Registro
@@ -437,7 +433,7 @@ public class Acceso extends JFrame {
 	}
 	
 	public void limpiarCajas(){
-		cajaUsuario.setText("");
+		cajaComboBox.setText("");
 		cajaPassword.setText("");
 	}
 	
@@ -461,7 +457,7 @@ public class Acceso extends JFrame {
 			conectarBD();																						//Creamos la conexión a la BBDD
 			if(connected){																						
 				//Si estamos conectados
-				usuario = cajaUsuario.getText();
+				usuario = cajaComboBox.getText();		//COGER USUARIO DEL COMBOBOX
 				contrasenya = String.valueOf(cajaPassword.getPassword());;
 				if(controlBD.accesoCorrecto(usuario, contrasenya) == 1){										//Nos conectamos para comprobar pero no cerramos conexión
 					jug1 = new Jugador();																		//Creamos un jugador para recoger sus datos de la bbdd
@@ -474,7 +470,7 @@ public class Acceso extends JFrame {
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Usuario/contraseña incorrectos. Vuelve a intentarlo o regístrate.");
-					cajaUsuario.setText("");
+					cajaComboBox.setText("");
 					cajaPassword.setText("");
 				}
 			}
@@ -518,7 +514,7 @@ public class Acceso extends JFrame {
 			}
 			else{
 				//Por ejemplo, si algun valor de las cajas de texto esta en blanco
-				JOptionPane.showMessageDialog(null, "Error. Debes introducir valores en todos los campos y presionar enter.");
+				JOptionPane.showMessageDialog(null, "Error. No puedes dejar valores vacíos");
 			}
 		}
 	}
