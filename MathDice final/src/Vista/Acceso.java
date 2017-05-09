@@ -25,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import java.awt.Font;
 
@@ -38,6 +40,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Acceso extends JFrame {
 
@@ -70,6 +73,7 @@ public class Acceso extends JFrame {
 	private int itemsComboBox;
 	private ImageIcon dadoLogin = new ImageIcon(getClass().getResource("/Imagenes/dado.png"));								//Imagen del panel de acceso
 	private JPanel panelBotones;
+	private Component rigidArea;
 	
 	//Semáforo
 	private boolean clickHecho=false;
@@ -88,9 +92,7 @@ public class Acceso extends JFrame {
 	 * Constructor
 	 */
 	public Acceso(VentanaPrincipal vp) {
-		setResizable(false);
 		
-
 		
 		//Para controlar el objeto ventanaprincipal que introduciremos como parámetro
 		vPrincipal = vp;
@@ -99,7 +101,7 @@ public class Acceso extends JFrame {
 		//Configuración del JFrame
 		//---------------------------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 393, 445);
+		setBounds(100, 100, 428, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -163,16 +165,8 @@ public class Acceso extends JFrame {
 		panelLogin.add(cajaPassword, gbc_cajaPassword);
 		
 		cajaComboBox = new JTextField();
+		cajaComboBox.setMinimumSize(new Dimension(200, 20));
 		cajaComboBox.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		cajaComboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {															//HACER INNER CLASS I NO DEJARLO AQUI
-				if(!clickHecho){
-					cajaComboBox.setText("");
-					clickHecho=true;
-				}
-			}
-		});
 		cajaComboBox.setName("cajaUsuario"); 		
 		cajaComboBox.setText("Buscar usuario...");
 		GridBagConstraints gbc_cajaComboBox=new GridBagConstraints();
@@ -184,6 +178,9 @@ public class Acceso extends JFrame {
 		gbc_cajaComboBox.gridy=1;
 		gbc_cajaComboBox.gridheight=1;
 		panelLogin.add(cajaComboBox, gbc_cajaComboBox);
+		cajaComboBox.addMouseListener(new ListenerCajaComboBox());
+		//Rellenamos el combobox por defecto con todos los usuarios
+		
 		
 		botonAcceder = new JButton();
 		botonAcceder.setText("Acceder"); 													
@@ -219,6 +216,7 @@ public class Acceso extends JFrame {
 		gbc_botonBuscar.gridwidth=1;
 		gbc_botonBuscar.gridheight=1;
 		panelLogin.add(botonBuscar, gbc_botonBuscar);
+		botonBuscar.addActionListener(new listenerBotonBuscar());
 		
 		comboBox = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
@@ -231,6 +229,20 @@ public class Acceso extends JFrame {
 		gbc_comboBox.gridwidth=1;
 		gbc_comboBox.gridheight=1;
 		panelLogin.add(comboBox, gbc_comboBox);
+		
+		rigidArea = Box.createRigidArea(new Dimension(50, 20));
+		GridBagConstraints gbc_rigidArea = new GridBagConstraints();
+		gbc_rigidArea.fill = GridBagConstraints.HORIZONTAL;
+		gbc_rigidArea.gridx=1;
+		gbc_rigidArea.gridy=3;
+		gbc_rigidArea.gridwidth=1;
+		gbc_rigidArea.gridheight=1;
+		panelLogin.add(rigidArea, gbc_rigidArea);
+		
+		
+		//Nos conectamos para rellenar el combobox con todos los usuarios al iniciar la ventana 
+		conectarBD();
+		rellenarComboBox("", comboBox);
 		
 		
 		//---------------------------------------------------------------------------------
@@ -376,6 +388,7 @@ public class Acceso extends JFrame {
 		//Añadimos los listeners a las cajas (para realizar comprobaciones y cambiar automáticamente de caja al presionar enter)
 		botonRegistrar.addActionListener(new ListenerBotonRegistrarUsuario());
 		
+		
 	}
 	
 	/**
@@ -446,33 +459,97 @@ public class Acceso extends JFrame {
 		cajaPass.setText("");
 	}
 	
+	public void rellenarComboBox(String cadena, JComboBox comboBox){
+		if(cajaComboBox.getText().isEmpty()){
+			controlBD.buscarUsuarios("", comboBox);
+		}
+		else{
+			controlBD.buscarUsuarios(cadena, comboBox);
+		}
+	}
+	
 	
 	/**
 	 * INNER CLASSES
 	 */
+	
+	class ListenerCajaComboBox implements MouseListener{
+
+		public void mouseClicked(MouseEvent e) {
+			// Acción a realizar al hacer click
+			if(!clickHecho){
+				cajaComboBox.setText("");
+				clickHecho=true;
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	
+	}
 	class listenerBotonAcceder implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
 			
-			conectarBD();																						//Creamos la conexión a la BBDD
-			if(connected){																						
+			if(!comboBox.getSelectedItem().equals("Usuario") ){
+				conectarBD();																						//Creamos la conexión a la BBDD
+				if(connected){																						
+					//Si estamos conectados
+					usuario = (String) comboBox.getSelectedItem();													//Obtenemos el nombre de usuario seleccionado
+					contrasenya = String.valueOf(cajaPassword.getPassword());;
+					if(controlBD.accesoCorrecto(usuario, contrasenya) == 1){										//Nos conectamos para comprobar pero no cerramos conexión
+						jug1 = new Jugador();																		//Creamos un jugador para recoger sus datos de la bbdd
+						controlBD.asignarPropiedades(jug1, usuario);												//Cerramos la conexión en este momento
+						JOptionPane.showMessageDialog(null, "Logueado con éxito");
+						vPrincipal.setJugador_ventanaPrincipal(jug1);												//Pasamos los objetos a la vPrincipal
+						vPrincipal.setConexion_ventanaPrincipal(conexionBD, controlBD);
+						vPrincipal.setVisible(true);
+						dispose();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Contraseña incorrecta. Vuelve a intentarlo o regístrate.");
+						cajaComboBox.setText("");
+						cajaPassword.setText("");
+					}
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista");
+			}
+		}
+	}
+	
+	class listenerBotonBuscar implements ActionListener{
+
+		public void actionPerformed(ActionEvent arg0) {
+			//nos conectamos
+			conectarBD();
+			if(connected){
 				//Si estamos conectados
-				usuario = cajaComboBox.getText();		//COGER USUARIO DEL COMBOBOX
-				contrasenya = String.valueOf(cajaPassword.getPassword());;
-				if(controlBD.accesoCorrecto(usuario, contrasenya) == 1){										//Nos conectamos para comprobar pero no cerramos conexión
-					jug1 = new Jugador();																		//Creamos un jugador para recoger sus datos de la bbdd
-					controlBD.asignarPropiedades(jug1, usuario);												//Cerramos la conexión en este momento
-					JOptionPane.showMessageDialog(null, "Logueado con éxito");
-					vPrincipal.setJugador_ventanaPrincipal(jug1);												//Pasamos los objetos a la vPrincipal
-					vPrincipal.setConexion_ventanaPrincipal(conexionBD, controlBD);
-					vPrincipal.setVisible(true);
-					dispose();
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Usuario/contraseña incorrectos. Vuelve a intentarlo o regístrate.");
-					cajaComboBox.setText("");
-					cajaPassword.setText("");
-				}
+				comboBox.removeAllItems(); 																		//Borramos todos los ítems anteriores
+				rellenarComboBox(cajaComboBox.getText(), comboBox);												//Rellenamos el jcombobox
+				comboBox.removeItem("Usuario");
 			}
 		}
 	}
@@ -497,6 +574,10 @@ public class Acceso extends JFrame {
 					if(controlBD.insertarJugador(cajaNombre.getText(), cajaApellido1.getText(), cajaApellido2.getText(), Integer.valueOf(cajaEdad.getText()), cajaUser.getText(), String.valueOf(cajaPass.getPassword())) == 1){
 						//Si se consigue crear el jugador correctamente
 						JOptionPane.showMessageDialog(null, "Registrado correctamente. Ahora puedes acceder con tu usuario y contraseña.");
+						//Nos conectamos para rellenar el combobox con todos los usuarios al iniciar la ventana
+						comboBox.removeAllItems();
+						conectarBD();
+						rellenarComboBox("", comboBox);
 						//Mostrar panel de acceso de nuevo
 						CardLayout c2 = (CardLayout)(contentPane.getLayout());
 						c2.show(contentPane, LOGIN);

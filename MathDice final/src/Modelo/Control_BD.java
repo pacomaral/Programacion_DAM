@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class Control_BD {
@@ -228,5 +229,42 @@ public class Control_BD {
 			JOptionPane.showMessageDialog(null, "Error en la consulta.");
 		}
 		return rs;
+	}
+	
+	public void buscarUsuarios(String usuario, JComboBox cb){
+		try{
+			instruccion = conexion.createStatement();
+			sentencia = "SELECT usuario, edad FROM jugadores WHERE usuario LIKE '"+usuario+"%' ORDER BY usuario ASC";		//Devolverá usuarios que empiecen por la cadena introducida
+			resultados = instruccion.executeQuery(sentencia);
+			//Añadimos antes que nada un valor por defecto al combobox
+			cb.addItem("Usuario");
+			//Vamos rellenando el combobox
+			if(resultados.next()){
+				String user = resultados.getString("usuario");
+				int edad = resultados.getInt("edad");
+				//añadimos al combobox
+				cb.addItem(resultados.getString("usuario"));
+				while(resultados.next()){
+					//añadimos al combobox
+					cb.addItem(resultados.getString("usuario"));
+				}
+			}
+			else{
+				cb.addItem("0 coincidencias");
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				instruccion.close();
+				resultados.close();
+				conexion.close();
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
 	}
 }
