@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Modelo.Jugador;
+import Vista.Juego_Dificil.ListenerDados;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -320,6 +321,14 @@ public class Juego_Facil extends JPanel {
 		}
 	}
 	
+	//Método para añadir un listener si el dado no está activado
+	public void anyadirListenerSiNoTiene(JLabel dado){
+		if(!dado.isEnabled()){
+			dado.addMouseListener(new ListenerDados());
+			dado.setEnabled(true);
+		}
+	}
+	
 	
 	// --------------------------------------------------------------------------------------------------
 	
@@ -339,6 +348,7 @@ public class Juego_Facil extends JPanel {
 			tocaOperacion=true;
 			cajaTexto.setText(cajaTexto.getText() + String.valueOf(valorDado));
 			dado.removeMouseListener(this);
+			dado.setEnabled(false); 											//Desactivamos el dado para después, no añadir el listener de nuevo a los que están activados
 		}
 		else if(tocaOperacion){
 			//No hará nada
@@ -414,11 +424,11 @@ public class Juego_Facil extends JPanel {
 			botonReintentar.setEnabled(false);
 			
 			//Añadimos los MouseListeners, ya que al presionar en un Dado lo habremos eliminado y si no los añadimos no los podremos utilizar de nuevo
-			dado1.addMouseListener(new ListenerDados());
-			dado2.addMouseListener(new ListenerDados());
-			dado3.addMouseListener(new ListenerDados());
-			dado4.addMouseListener(new ListenerDados());
-			dado5.addMouseListener(new ListenerDados());
+			anyadirListenerSiNoTiene(dado1);
+			anyadirListenerSiNoTiene(dado2);
+			anyadirListenerSiNoTiene(dado3);
+			anyadirListenerSiNoTiene(dado4);
+			anyadirListenerSiNoTiene(dado5);
 		}
 	}
 	
