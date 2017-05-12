@@ -7,7 +7,11 @@ import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import Controlador.Encriptacion;
+
 public class Control_BD {
+	
+	private Encriptacion encript;
 	
 	//Para gestionar nuestra conexion
 	private Connection conexion = null;
@@ -20,38 +24,9 @@ public class Control_BD {
 	//Constructor (recogerá la conexión con la que se trabajará)
 	public Control_BD(Connection conexion){
 		this.conexion=conexion;
+		encript = new Encriptacion();
 	}
-	
-	//Método para mostrar los datos de los jugadores por consola
-	public void mostrarDatosJugadores(){
-		try{
-			sentencia = "SELECT nombre, apellido1, apellido2, edad FROM jugadores ORDER BY edad DESC";
-			instruccion = this.conexion.createStatement(); 								//Creamos el statement
-			resultados = instruccion.executeQuery(sentencia);							//Guardamos los resultados de ejecutar la sentencia;
-			
-			//Mostramos por pantalla los datos
-			while(resultados.next()){
-				System.out.print(resultados.getString("nombre")+" ");
-				System.out.print(resultados.getString("apellido1")+" ");
-				System.out.print(resultados.getString("apellido2")+", ");
-				System.out.println(resultados.getInt("edad")+" años.");
-			}
-		}
-		catch(SQLException excepcionSQL){
-			excepcionSQL.printStackTrace();
-		}
-		finally{
-			try{																//Cerramos conexión, statement, y resultset
-				resultados.close();
-				instruccion.close();
-				conexion.close();
-			}
-			catch(SQLException excepcionSQL){
-				excepcionSQL.printStackTrace();
-			}
-		}
-	}
-	
+
 	//Método para asignar las propiedades del jugador a su objeto
 	public void asignarPropiedades(Jugador jug, String usuario){
 		try{

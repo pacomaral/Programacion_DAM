@@ -8,7 +8,7 @@ public class Principal {															//PRINCIPAL
 		
 		VentanaPrincipal vPrincipal = new VentanaPrincipal();
 		Acceso vAcceso = new Acceso(vPrincipal);									//vPrincipal de parámetro para poder mostrarla desde vLogin
-		vAcceso.setLocationRelativeTo(null);										//Para que el frame aparezca centrado en la pantall
+		vAcceso.setLocationRelativeTo(null);										//Para que el frame aparezca centrado en la pantalla
 		vAcceso.setVisible(true);													
 		
 		vPrincipal.setAcceso_ventanaPrincipal(vAcceso);								//Para poder volver a mostrar la ventana de acceso desde la principal

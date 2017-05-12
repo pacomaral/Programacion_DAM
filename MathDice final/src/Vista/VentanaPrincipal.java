@@ -250,6 +250,7 @@ public class VentanaPrincipal extends JFrame {
 		vAcceso.setVisible(true);
 		vAcceso.limpiarCajas();
 		vAcceso.limpiarDatosRegistro();
+		vAcceso.rellenarCajaBomboBox();
 		dispose(); 																	//Cerramos la ventana actual
 	}
 	

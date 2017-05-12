@@ -18,6 +18,7 @@ import java.awt.Image;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Controlador.Encriptacion;
 import Modelo.ConexionBD;
 import Modelo.Control_BD;
 import Modelo.Jugador;
@@ -31,6 +32,7 @@ import java.awt.Color;
 public class Perfil extends JPanel {
 	
 	private Jugador jug1;
+	private Encriptacion encript = new Encriptacion();
 	
 	//Paneles a incluir en el GridBagLayout
 	private JPanel panelDatos = new JPanel();
@@ -344,7 +346,7 @@ public class Perfil extends JPanel {
 		cajaApellido2.setText(jug1.getApellido2());
 		cajaEdad.setText(String.valueOf(jug1.getEdad()));
 		cajaApodo.setText(jug1.getUsuario());
-		cajaPass.setText(jug1.getContrasenya());
+		cajaPass.setText("");
 	}
 	
 	//Método para actualizar las propiedades del jugador
@@ -354,7 +356,7 @@ public class Perfil extends JPanel {
 		jug.setApellido2(cajaApellido2.getText());
 		jug.setEdad(Integer.valueOf(cajaEdad.getText()));
 		jug.setUsuario(cajaApodo.getText());
-		jug.setContrasenya(String.valueOf(cajaPass.getPassword()));
+		jug.setContrasenya(encript.encriptarString((String.valueOf(cajaPass.getPassword()))));								//Encriptamos la contraseña ya que trabajaremos con ella encriptada
 	}
 	
 	//Método para mostrar la puntuación máxima

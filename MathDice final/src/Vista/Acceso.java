@@ -13,6 +13,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Controlador.Encriptacion;
 import Modelo.ConexionBD;
 import Modelo.Control_BD;
 import Modelo.Jugador;
@@ -48,6 +49,7 @@ public class Acceso extends JFrame {
 	private VentanaPrincipal vPrincipal;
 	private Jugador jug1;
 	private Acceso acceso;
+	private Encriptacion encript;
 	
 	//Objetos necesarios para conexión/consulta/manipulación de BBDD
 	private ConexionBD conexionBD;
@@ -96,6 +98,9 @@ public class Acceso extends JFrame {
 		
 		//Para controlar el objeto ventanaprincipal que introduciremos como parámetro
 		vPrincipal = vp;
+		
+		//Creamos el objeto para poder encriptar datos
+		encript = new Encriptacion();																	
 			
 		//---------------------------------------------------------------------------------
 		//Configuración del JFrame
@@ -468,6 +473,10 @@ public class Acceso extends JFrame {
 		}
 	}
 	
+	public void rellenarCajaBomboBox(){
+		cajaComboBox.setText("Buscar usuario...");
+	}
+	
 	
 	/**
 	 * INNER CLASSES
@@ -514,10 +523,11 @@ public class Acceso extends JFrame {
 			
 			if(!comboBox.getSelectedItem().equals("Usuario") ){
 				conectarBD();																						//Creamos la conexión a la BBDD
-				if(connected){																						
+				if(connected){
 					//Si estamos conectados
 					usuario = (String) comboBox.getSelectedItem();													//Obtenemos el nombre de usuario seleccionado
 					contrasenya = String.valueOf(cajaPassword.getPassword());;
+					contrasenya = encript.encriptarString(contrasenya);												//Encriptamos la contrasenya, ya que en la BBDD está encriptada
 					if(controlBD.accesoCorrecto(usuario, contrasenya) == 1){										//Nos conectamos para comprobar pero no cerramos conexión
 						jug1 = new Jugador();																		//Creamos un jugador para recoger sus datos de la bbdd
 						controlBD.asignarPropiedades(jug1, usuario);												//Cerramos la conexión en este momento
@@ -571,7 +581,7 @@ public class Acceso extends JFrame {
 			if(datosCorrectos()){
 				if(datosValidos()){
 					conectarBD();
-					if(controlBD.insertarJugador(cajaNombre.getText(), cajaApellido1.getText(), cajaApellido2.getText(), Integer.valueOf(cajaEdad.getText()), cajaUser.getText(), String.valueOf(cajaPass.getPassword())) == 1){
+					if(controlBD.insertarJugador(cajaNombre.getText(), cajaApellido1.getText(), cajaApellido2.getText(), Integer.valueOf(cajaEdad.getText()), cajaUser.getText(), encript.encriptarString(String.valueOf(cajaPass.getPassword()))) == 1){
 						//Si se consigue crear el jugador correctamente
 						JOptionPane.showMessageDialog(null, "Registrado correctamente. Ahora puedes acceder con tu usuario y contraseña.");
 						//Nos conectamos para rellenar el combobox con todos los usuarios al iniciar la ventana
