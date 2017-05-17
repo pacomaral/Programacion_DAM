@@ -1,11 +1,21 @@
 package Modelo;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.PreparedStatement;
 
 import Controlador.Encriptacion;
 
@@ -18,6 +28,7 @@ public class Control_BD {
 	
 	//Objetos necesarios para la consulta
 	private Statement instruccion = null;
+	private PreparedStatement instruccionPreparada = null;
 	private ResultSet resultados = null;
 	private String sentencia = "";
 	
@@ -45,6 +56,7 @@ public class Control_BD {
 				jug.setPuntuacionMax(resultados.getInt("puntuacion_max"));
 				jug.setUsuario(resultados.getString("usuario"));
 				jug.setContrasenya(resultados.getString("clave"));
+				jug.setImagenPerfil(this.leerImagen(usuario));
 				System.out.println(jug.infoJugador());										//Imprimimos datos por consola para comprobar que los recoge correctamente
 			}
 			else{
@@ -241,5 +253,79 @@ public class Control_BD {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//Método para guardar una imagen de perfil en la bbdd para un determinado usuario
+	public boolean guardarImagen(String ruta, String usuario){
+		sentencia = "UPDATE jugadores SET imagen_perfil=? WHERE usuario='"+usuario+"'";
+		FileInputStream fis = null;
+		try{
+			//Con esto hacemos que la conexión no actualice los cambios que hagamos hasta que se lo digamos
+			conexion.setAutoCommit(false);			
+			//Creamos objeto file con la ruta de la imagen
+			File archivo = new File(ruta);		
+			//Esto guardará los bytes de la imagen
+			fis = new FileInputStream(archivo);													
+			instruccionPreparada = (PreparedStatement) conexion.prepareStatement(sentencia);			//Preparamos la sentencia
+			instruccionPreparada.setBinaryStream(1, fis, (int)archivo.length()); 						//Añadimos los bytes de la imagen al parámetro '?' de la sentencia
+			instruccionPreparada.executeUpdate();														//Ejecutamos la sentencia
+			//Finalmente le decimos a la conexión que actualice los cambios
+			conexion.commit();
+			return true;
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+			JOptionPane.showMessageDialog(null, "La imagen es demasiado grande");
+		}
+		finally{
+			try{
+				instruccionPreparada.close();
+				fis.close();
+				conexion.setAutoCommit(true); 										//Volvemos a poner que actualice los cambios de manera automática
+				conexion.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	public ImageIcon leerImagen(String usuario){
+		ImageIcon imagen = null;
+		try{
+			sentencia = "SELECT imagen_perfil FROM jugadores WHERE usuario='"+usuario+"'";
+			instruccion = conexion.createStatement();
+			resultados = instruccion.executeQuery(sentencia);
+			while(resultados.next()){
+				Blob blob = resultados.getBlob("imagen_perfil");							//Obtenemos los bytes de la imagen
+				byte[] data = blob.getBytes(1, (int)blob.length());					//Leemos los bytes de la imagen
+				BufferedImage img = null;
+				try{
+					img = ImageIO.read(new ByteArrayInputStream(data));				//Guardamos los bytes leídos en el objeto de bufferedImage
+				}
+				catch(IOException ex){
+					ex.printStackTrace();
+				}
+			imagen = new ImageIcon(img);										//Finalmente guardamos la imagen en el ImageIcon
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				instruccion.close();
+				resultados.close();
+				conexion.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return imagen;
 	}
 }

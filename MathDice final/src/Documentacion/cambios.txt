@@ -1,5 +1,7 @@
-- Cambiado el LaF (Look and Feel, apariencia de la ventana) a 'Sea Glass'
-
 - Añadido un JComboBox en el panel de acceso donde el jugador podrá elegir su usuario entre todos los registrados (tendrá la opción de buscarlo si no lo encuentra)
 
 - Mejoradas las comprobaciones del panel de registro del jugador
+
+- Arreglado problema con la acumulación de listeners en el modo de juego fácil
+
+- Ahora el usuario podrá guardar una imagen de perfil en la BBDD en la ventana de editar perfil (por defecto tendrán todos la misma)

@@ -242,6 +242,7 @@ public class VentanaPrincipal extends JFrame {
 		vPerfil.mostrarDatos();
 		vPerfil.mostrarPuntuacion();
 		vPerfil.limpiarCajaInfo();
+		vPerfil.mostrarImagenPerfil();
 	}
 	
 	public void lanzarAcceso(){

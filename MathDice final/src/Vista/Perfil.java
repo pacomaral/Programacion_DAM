@@ -286,7 +286,6 @@ public class Perfil extends JPanel {
 		panelImagen.setLayout(gridBagLayout2);
 		
 		etiquetaImagenPerfil = new JLabel();
-		etiquetaImagenPerfil.setIcon(redimensionarImagen(avatar, 256, 256));
 		GridBagConstraints gbc_etiquetaImagen = new GridBagConstraints();
 		gbc_etiquetaImagen.gridx=0;															//Comenzará desde fila 0 y columna 0
 		gbc_etiquetaImagen.gridy=0;
@@ -324,11 +323,20 @@ public class Perfil extends JPanel {
 		int opcion = fileChooser.showOpenDialog(referencia);							//Abrimos la ventana para buscar las imágenes
 		if(opcion==JFileChooser.APPROVE_OPTION){										//Si hemos elegido nuestra imagen:
 			String ruta = fileChooser.getSelectedFile().getPath();						//Obtenemos la ruta de la imagen
-			imagen = new ImageIcon(ruta);												//Creamos el ImageIcon con la imagen seleccionada
-
-			//Ponemos la imagen redimensionada en JLabel introducido como parámetro
-			etiqueta.setIcon(redimensionarImagen(imagen, 256, 256));
+			//Guardamos en la BBDD
+			conectarBD();
+			controlBD.guardarImagen(ruta, jug1.getUsuario());
+			
+			//Mostramos la imagen
+			conectarBD();
+			this.mostrarImagenPerfil();
 		}
+	}
+	
+	//Método para poner la imagen de perfil del jugador en la etiqueta correspondiente
+	public void mostrarImagenPerfil(){
+		conectarBD();
+		etiquetaImagenPerfil.setIcon(redimensionarImagen(controlBD.leerImagen(jug1.getUsuario()), 256, 256));				//Ponemos la imagen de perfil del jugador
 	}
 	
 	//Método para redimensionar una imagen con anchura y altura introducidos por parámetro
@@ -346,7 +354,7 @@ public class Perfil extends JPanel {
 		cajaApellido2.setText(jug1.getApellido2());
 		cajaEdad.setText(String.valueOf(jug1.getEdad()));
 		cajaApodo.setText(jug1.getUsuario());
-		cajaPass.setText("");
+		cajaPass.setText(jug1.getContrasenya());
 	}
 	
 	//Método para actualizar las propiedades del jugador
@@ -427,6 +435,7 @@ public class Perfil extends JPanel {
 	class ListenerBotonElegirImagen implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(null, "Tamaño recomendado: 250 x 250 px");
 			elegirImagen_paraJLabel(etiquetaImagenPerfil);
 		}
 		

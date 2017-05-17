@@ -1,5 +1,7 @@
 package Modelo;
 
+import javax.swing.ImageIcon;
+
 public class Jugador {
 
 	//PROPIEDADES
@@ -12,6 +14,7 @@ public class Jugador {
 	private int edad;
 	private int identificador;
 	private int puntuacionMax=0;
+	private ImageIcon imagenPerfil;
 	
 	//MÉTODOS (getters y setters de cada propiedad de momento)
 	
@@ -70,6 +73,14 @@ public class Jugador {
 	}
 	public void setContrasenya(String pass) {
 		this.contrasenya = pass;
+	}
+	
+	public void setImagenPerfil(ImageIcon img){
+		this.imagenPerfil=img;
+	}
+	
+	public ImageIcon getImagenPerfil(){
+		return imagenPerfil;
 	}
 	
 	
