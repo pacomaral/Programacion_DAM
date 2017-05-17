@@ -42,6 +42,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Toolkit;
 
 public class Acceso extends JFrame {
 
@@ -94,6 +95,8 @@ public class Acceso extends JFrame {
 	 * Constructor
 	 */
 	public Acceso(VentanaPrincipal vp) {
+		//Icono de la ventana
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\marav\\Desktop\\Java Projects\\Workspace\\Imagenes_BBDD\\src\\Imagenes\\dado.png"));
 		
 		
 		//Para controlar el objeto ventanaprincipal que introduciremos como parámetro
@@ -122,7 +125,7 @@ public class Acceso extends JFrame {
 		//---------------------------------------------------------------------------------
 		
 		//Cambiamos color de fondo
-		panelLogin.setBackground(new Color(153, 153, 102));
+		panelLogin.setBackground(new Color(102, 153, 204));
 		
 		//Ponemos como layout del panel el GridBagLayout
 		GridBagLayout gridBagLayout_login = new GridBagLayout();
@@ -256,7 +259,7 @@ public class Acceso extends JFrame {
 		
 		
 		//Cambiamos color de fondo
-		panelRegistro.setBackground(new Color(153, 153, 102));
+		panelRegistro.setBackground(new Color(102, 153, 204));
 		
 		//Ponemos como layout del panel el GridBagLayout
 		GridBagLayout gridBagLayout_registro = new GridBagLayout();
@@ -535,6 +538,7 @@ public class Acceso extends JFrame {
 						vPrincipal.setJugador_ventanaPrincipal(jug1);												//Pasamos los objetos a la vPrincipal
 						vPrincipal.setConexion_ventanaPrincipal(conexionBD, controlBD);
 						vPrincipal.setVisible(true);
+						vPrincipal.setLocationRelativeTo(null);														//Para que el frame aparezca centrado en la pantalla
 						dispose();
 					}
 					else{

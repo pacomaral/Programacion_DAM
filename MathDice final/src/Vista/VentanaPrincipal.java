@@ -27,6 +27,8 @@ import java.awt.SystemColor;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.Toolkit;
+import java.awt.GridLayout;
 
 public class VentanaPrincipal extends JFrame {
 	
@@ -81,6 +83,7 @@ public class VentanaPrincipal extends JFrame {
 	 * Constructor
 	 */
 	public VentanaPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\marav\\Desktop\\Java Projects\\Workspace\\Imagenes_BBDD\\src\\Imagenes\\dado.png"));
 		
 		
 		//---------------------------------------------------------------------------------
@@ -88,7 +91,7 @@ public class VentanaPrincipal extends JFrame {
 		//---------------------------------------------------------------------------------
 		setPreferredSize(new Dimension(600, 420));								//Tamaño predeterminado del Frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 558, 411);
+		setBounds(100, 100, 335, 306);
 				
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,41 +108,36 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(vPerfil, PERFIL);
 		contentPane.add(vClasificacion, CLASIFICACION);
 		
-		vJuego_Dificil.setBackground(new Color(153, 153, 102));
-		vJuego_Facil.setBackground(new Color(153, 153, 102));
-		vClasificacion.setBackground(new Color(153, 153, 102));
 		
 		//---------------------------------------------------------------------------------
 		//Panel para elegir el modo de juego
 		//---------------------------------------------------------------------------------
 		
-		vModoJuego.setBackground(new Color(153, 153, 102));
-		vModoJuego.setLayout(null);
-		
-		//Botones para elegir una opción (Se meten en un 'ButtonGroup' para que sólo se pueda seleccionar uno)
-		botonFacil = new JRadioButton("Fácil", true);
-		botonFacil.setBackground(new Color(153, 153, 102));
-		botonFacil.setBounds(128, 92, 109, 23);
-		vModoJuego.add(botonFacil);
-		
-		botonDificil = new JRadioButton("Difícil", false);
-		botonDificil.setBackground(new Color(153, 153, 102));
-		botonDificil.setBounds(128, 121, 101, 46);
-		vModoJuego.add(botonDificil);
+		vModoJuego.setBackground(new Color(102, 153, 204));
+		vModoJuego.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		grupoBotones = new ButtonGroup();
-		grupoBotones.add(botonFacil);
-		grupoBotones.add(botonDificil);
 		
 		etiquetaModoJuego = new JLabel("Elige un modo de juego:");
+		etiquetaModoJuego.setHorizontalAlignment(SwingConstants.CENTER);
 		etiquetaModoJuego.setFont(new Font("Consolas", Font.PLAIN, 15));
-		etiquetaModoJuego.setBounds(66, 49, 248, 14);
 		vModoJuego.add(etiquetaModoJuego);
 		
 		continuarBoton = new JButton("Continuar");
-		continuarBoton.setBackground(new Color(204, 255, 255));
 		continuarBoton.addActionListener(new ListenerBotonContinuar());
-		continuarBoton.setBounds(84, 175, 127, 23);
+		
+		//Botones para elegir una opción (Se meten en un 'ButtonGroup' para que sólo se pueda seleccionar uno)
+		botonFacil = new JRadioButton("Fácil", true);
+		botonFacil.setHorizontalAlignment(SwingConstants.CENTER);
+		botonFacil.setBackground(new Color(102, 153, 204));
+		vModoJuego.add(botonFacil);
+		grupoBotones.add(botonFacil);
+		
+		botonDificil = new JRadioButton("Difícil", false);
+		botonDificil.setHorizontalAlignment(SwingConstants.CENTER);
+		botonDificil.setBackground(new Color(102, 153, 204));
+		vModoJuego.add(botonDificil);
+		grupoBotones.add(botonDificil);
 		vModoJuego.add(continuarBoton);
 		
 		//---------------------------------------------------------------------------------
@@ -194,7 +192,6 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		
 	}
 	
 	/**
@@ -216,6 +213,8 @@ public class VentanaPrincipal extends JFrame {
 	public void lanzarJuegoFacil(){
 		CardLayout c1 = (CardLayout)(contentPane.getLayout());
 		c1.show(contentPane, JUEGO_FACIL);	
+		this.setLocationRelativeTo(null);														//Para que el frame aparezca centrado en la pantalla
+		this.pack();
 		vJuego_Facil.setJugador_vJuegoFacil(jug1); 												//Pasamos el objeto al panel para utilizarlo allí
 		setBounds(100, 100, 525, 394);
 	}
@@ -223,6 +222,8 @@ public class VentanaPrincipal extends JFrame {
 	public void lanzarJuegoDificil(){
 		CardLayout c1 = (CardLayout)(contentPane.getLayout());
 		c1.show(contentPane, JUEGO_DIFICIL);
+		this.setLocationRelativeTo(null);														//Para que el frame aparezca centrado en la pantalla
+		this.pack();
 		vJuego_Dificil.setJugador_vJuegoDificil(jug1); 											//Pasamos el objeto al panel para utilizarlo allí
 		vJuego_Dificil.setConexion_vJuegoDificil(conexionBD, controlBD); 						//Pasamos los objetos para la conexión
 		setBounds(100, 100, 525, 394);
@@ -231,12 +232,16 @@ public class VentanaPrincipal extends JFrame {
 	public void lanzarAyuda(){
 		CardLayout c1 = (CardLayout)(contentPane.getLayout());
 		c1.show(contentPane, AYUDA);
+		this.setLocationRelativeTo(null);
+		this.pack();//Para que el frame aparezca centrado en la pantalla
 		setBounds(100, 100, 525, 394);
 	}
 	
 	public void lanzarPerfil(){
 		CardLayout c1 = (CardLayout)(contentPane.getLayout());
 		c1.show(contentPane, PERFIL);
+		this.setLocationRelativeTo(null);														//Para que el frame aparezca centrado en la pantalla
+		this.pack();
 		vPerfil.setJugador_EditarPerfil(jug1);										//Pasamos el jugador allí para poder acceder a él
 		vPerfil.setConexion_EditarPerfil(conexionBD, controlBD); 					//Pasamos los objetos de conexión para acceder desde sea ventana
 		vPerfil.mostrarDatos();

@@ -35,7 +35,7 @@ public class ClasificacionPuntuaciones extends JPanel {
 	 * Constructor
 	 */
 	public ClasificacionPuntuaciones() {
-		setBackground(new Color(153, 153, 102));
+		setBackground(new Color(102, 153, 204));
 		setLayout(new BorderLayout(0, 0));
 		
 		scrollPane = new JScrollPane();
@@ -46,7 +46,7 @@ public class ClasificacionPuntuaciones extends JPanel {
 		tabla.setRowHeight(40);;
 		tabla.setFillsViewportHeight(true);
 		tabla.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
-		tabla.setBackground(new Color(153, 153, 102));
+		tabla.setBackground(new Color(102, 153, 204));
 		scrollPane.setViewportView(tabla);
 		
 		//Creamos un "modelo" donde iremos colocando el resultado de la consulta SQL obtenida

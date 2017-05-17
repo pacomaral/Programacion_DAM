@@ -28,6 +28,7 @@ import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.awt.Color;
+import java.awt.Font;
 
 public class Juego_Dificil extends JPanel {
 	
@@ -99,8 +100,8 @@ public class Juego_Dificil extends JPanel {
 	 * Constructor
 	 */
 	public Juego_Dificil() {
-		setBackground(new Color(153, 153, 102));
-		panelDados.setBackground(new Color(153, 153, 102));
+		setBackground(new Color(102, 153, 204));
+		panelDados.setBackground(new Color(102, 153, 204));
 		
 		
 		//---------------------------------------------------------------------------
@@ -139,7 +140,7 @@ public class Juego_Dificil extends JPanel {
 		dado7 = new JLabel();
 		dado7.setHorizontalAlignment(SwingConstants.CENTER);
 		panelDados.add(dado7);
-		panelOperaciones.setBackground(new Color(153, 153, 102));
+		panelOperaciones.setBackground(new Color(102, 153, 204));
 		
 		//---------------------------------------------------------------------------
 		//PANEL OPERACIONES 
@@ -230,6 +231,7 @@ public class Juego_Dificil extends JPanel {
 		
 		//Etiquetas
 		etiquetaTemp = new JLabel();
+		etiquetaTemp.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		etiquetaTemp.setBackground(new Color(153, 153, 102));
 		etiquetaTemp.setHorizontalAlignment(SwingConstants.CENTER);
 		etiquetaTemp.setText("00:60");
@@ -244,6 +246,7 @@ public class Juego_Dificil extends JPanel {
 		add(etiquetaTemp, gbc_etiquetaTemp);
 		
 		etiquetaPuntuacion = new JLabel();
+		etiquetaPuntuacion.setFont(new Font("Trebuchet MS", Font.PLAIN, 11));
 		etiquetaPuntuacion.setBackground(new Color(153, 153, 102));
 		etiquetaPuntuacion.setHorizontalAlignment(SwingConstants.CENTER);
 		etiquetaPuntuacion.setText("Puntuación: 0");
@@ -285,7 +288,6 @@ public class Juego_Dificil extends JPanel {
 		
 		//Botones 
 		botonEmpezar = new JButton();
-		botonEmpezar.setBackground(new Color(204, 255, 255));
 		botonEmpezar.setText("Empezar");
 		GridBagConstraints gbc_botonEmpezar = new GridBagConstraints();
 		gbc_botonEmpezar.weightx = 0.1;
@@ -296,7 +298,6 @@ public class Juego_Dificil extends JPanel {
 		add(botonEmpezar, gbc_botonEmpezar);
 		
 		botonComprobar = new JButton();
-		botonComprobar.setBackground(new Color(204, 255, 255));
 		botonComprobar.setText("Comprobar");
 		botonComprobar.setEnabled(false);
 		GridBagConstraints gbc_botonComprobar = new GridBagConstraints();

@@ -79,7 +79,7 @@ public class Perfil extends JPanel {
 	 * Constructor
 	 */
 	public Perfil() {
-		setBackground(new Color(153, 153, 102));
+		setBackground(new Color(102, 153, 204));
 	
 		referencia = this;
 		
@@ -101,7 +101,7 @@ public class Perfil extends JPanel {
 		gbc_panelDatos.gridy=0;
 		gbc_panelDatos.gridwidth=1;														//Ocupará 2 filas y 2 columnas
 		gbc_panelDatos.gridheight=1;
-		panelDatos.setBackground(new Color(153, 153, 102));
+		panelDatos.setBackground(new Color(102, 153, 204));
 		add(panelDatos, gbc_panelDatos);
 		
 		GridBagConstraints gbc_panelImagen = new GridBagConstraints();
@@ -112,11 +112,11 @@ public class Perfil extends JPanel {
 		gbc_panelImagen.gridy=0;
 		gbc_panelImagen.gridwidth=1;														//Ocupará 2 filas y 2 columnas
 		gbc_panelImagen.gridheight=1;
-		panelImagen.setBackground(new Color(153, 153, 102));
+		panelImagen.setBackground(new Color(102, 153, 204));
 		add(panelImagen, gbc_panelImagen);
 		
 		cajaInfo = new JTextField();
-		cajaInfo.setBackground(new Color(153, 153, 102));
+		cajaInfo.setBackground(new Color(102, 153, 204));
 		cajaInfo.setFont(new Font("Malgun Gothic", Font.BOLD, 13));
 		cajaInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		cajaInfo.setEditable(false);
@@ -262,7 +262,6 @@ public class Perfil extends JPanel {
 		panelDatos.add(cajaPass, gbc_cajaPass);
 		
 		botonActualizar = new JButton();
-		botonActualizar.setBackground(new Color(204, 255, 255));
 		botonActualizar.setName("Actualizar");
 		botonActualizar.setText("Actualizar");
 		botonActualizar.setEnabled(true);
@@ -292,7 +291,6 @@ public class Perfil extends JPanel {
 		panelImagen.add(etiquetaImagenPerfil, gbc_etiquetaImagen);
 		
 		elegirImagen = new JButton();
-		elegirImagen.setBackground(new Color(204, 255, 255));
 		elegirImagen.setName("Elegir");
 		elegirImagen.setText("Cambiar Imagen");
 		elegirImagen.addActionListener(new ListenerBotonElegirImagen());
@@ -354,7 +352,7 @@ public class Perfil extends JPanel {
 		cajaApellido2.setText(jug1.getApellido2());
 		cajaEdad.setText(String.valueOf(jug1.getEdad()));
 		cajaApodo.setText(jug1.getUsuario());
-		cajaPass.setText(jug1.getContrasenya());
+		cajaPass.setText("");
 	}
 	
 	//Método para actualizar las propiedades del jugador
@@ -364,7 +362,9 @@ public class Perfil extends JPanel {
 		jug.setApellido2(cajaApellido2.getText());
 		jug.setEdad(Integer.valueOf(cajaEdad.getText()));
 		jug.setUsuario(cajaApodo.getText());
-		jug.setContrasenya(encript.encriptarString((String.valueOf(cajaPass.getPassword()))));								//Encriptamos la contraseña ya que trabajaremos con ella encriptada
+		if(!String.valueOf(cajaPass.getPassword()).equals("")){																//Si no está vacía la caja recuperamos los datos 
+			jug.setContrasenya(encript.encriptarString((String.valueOf(cajaPass.getPassword()))));								//Encriptamos la contraseña ya que trabajaremos con ella encriptada
+		}
 	}
 	
 	//Método para mostrar la puntuación máxima
@@ -403,7 +403,7 @@ public class Perfil extends JPanel {
 	
 	//Método para comprobar que no haya ninguna caja de texto vacía
 	public boolean datosCorrectos(){
-		if(cajaNombre.getText().isEmpty() || cajaApellido1.getText().isEmpty() || cajaApellido2.getText().isEmpty() || cajaEdad.getText().isEmpty()  || cajaApodo.getText().isEmpty() || String.valueOf(cajaPass.getPassword()).isEmpty()){
+		if(cajaNombre.getText().isEmpty() || cajaApellido1.getText().isEmpty() || cajaApellido2.getText().isEmpty() || cajaEdad.getText().isEmpty()  || cajaApodo.getText().isEmpty()){
 			cajaInfo.setText("Error. Algún dato vacío");
 			return false;
 		}
@@ -413,7 +413,7 @@ public class Perfil extends JPanel {
 	}
 	
 	public boolean datosValidos(){
-		if(sonEspacios(cajaNombre.getText()) || sonEspacios(cajaApellido1.getText()) || sonEspacios(cajaApellido2.getText()) || sonEspacios(cajaEdad.getText()) || sonEspacios(cajaApodo.getText()) || sonEspacios(String.valueOf(cajaPass.getPassword()))){
+		if(sonEspacios(cajaNombre.getText()) || sonEspacios(cajaApellido1.getText()) || sonEspacios(cajaApellido2.getText()) || sonEspacios(cajaEdad.getText()) || sonEspacios(cajaApodo.getText())){
 			return false;
 		}
 		else{

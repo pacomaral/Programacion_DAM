@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import java.awt.Color;
 
 public class Juego_Facil extends JPanel {
 
@@ -90,6 +91,7 @@ public class Juego_Facil extends JPanel {
 	 * Constructor
 	 */
 	public Juego_Facil() {
+		setBackground(new Color(102, 153, 204));
 		
 		
 		
