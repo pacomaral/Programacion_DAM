@@ -7,3 +7,5 @@
 - Ahora el usuario podrá guardar una imagen de perfil en la BBDD en la ventana de editar perfil (por defecto tendrán todos la misma)
 
 - Cambiado icono de las ventanas del juego (ahora es un dado en lugar del símbolo de java)
+
+- Se puede conectar a BD de AWS si la principal falla (descomentar código en Acceso, JuegoDificil, Perfil)
