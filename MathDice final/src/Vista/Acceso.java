@@ -595,7 +595,6 @@ public class Acceso extends JFrame {
 						rellenarComboBox("", comboBox);
 						//Guardamos la imagen de perfil por defecto
 						conectarBD();
-						controlBD.guardarImagen("src/Imagenes/avatar.png", cajaUser.getText());
 						//Mostrar panel de acceso de nuevo
 						CardLayout c2 = (CardLayout)(contentPane.getLayout());
 						c2.show(contentPane, LOGIN);
