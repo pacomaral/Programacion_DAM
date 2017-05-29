@@ -407,8 +407,8 @@ public class Acceso extends JFrame {
 	
 	public void conectarBD(){
 		try{
-			//conexionBD = ConexionBD.getInstance("84.126.92.105:3306", "usuarios", "root", "asdasd");			//Esto creará el objeto y la instancia de ConexionBD
-			conexionBD = ConexionBD.getInstance("52.32.124.232:3306", "usuarios", "paco", "asdasd");			//Servidor EC2 AMAZON
+			conexionBD = ConexionBD.getInstance("84.126.92.105:3306", "usuarios", "root", "asdasd");			//Esto creará el objeto y la instancia de ConexionBD
+			//conexionBD = ConexionBD.getInstance("52.32.124.232:3306", "usuarios", "paco", "asdasd");			//Servidor EC2 AMAZON
 			connected = conexionBD.conectarBD();																//Nos conectamos
 			conexion = conexionBD.getConexion();
 			if(connected){
